@@ -2,7 +2,7 @@ FROM node:20.17.0-alpine
 
 ENV SGR_BACKEND_API=http://sgr-backend
 
-WORKDIR /app
+WORKDIR /frontend-app
 
 COPY package.json .
 

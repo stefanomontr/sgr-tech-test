@@ -1,16 +1,21 @@
 'use server';
+import CreateSgrEntityForm from "@/components/CreateSgrEntityForm";
+import SgrEntityList from "@/components/SgrEntityList";
 import SgrEntity from "@/data/SgrEntity";
 import fetchFromBackendApi from "@/utils/fetch-utils";
 
 async function fetchSgrEntities() {
-  return fetchFromBackendApi(`/sgr/all`);
+  return fetchFromBackendApi<SgrEntity[]>(`/sgr/all`, { cache: 'no-store' });
 }
 
 export default async function SgrTechTest() {
 
-  const sgrEntities: SgrEntity[] = await fetchSgrEntities();
+  const sgrEntities = await fetchSgrEntities();
 
-  return sgrEntities.map(sgrEntity => 
-    <div key={sgrEntity.id}>{sgrEntity.id} : {sgrEntity.sgrString}</div>
+  return (
+    <div>
+      <SgrEntityList sgrEntities={sgrEntities} />
+      <CreateSgrEntityForm />
+    </div>
   );
 }
