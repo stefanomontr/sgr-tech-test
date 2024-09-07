@@ -3,7 +3,7 @@ services:
   sgr-mysql:
     image: mysql:9
     environment:
-      MYSQL_DATABASE: 'SGR_DATABASE'
+      MYSQL_DATABASE: SGR_DATABASE
       MYSQL_ROOT_PASSWORD: root
     ports:
       - 3306:3306
@@ -14,10 +14,9 @@ services:
     build:
       context: sgr-backend
       dockerfile: Dockerfile
-      args:
-        MYSQL_DB_HOST: localhost
     environment:
       SGR_MYSQL_DB_HOST: sgr-mysql
+#      TODO: separa in host e porta
     ports:
       - 8080:8080
     depends_on:
@@ -27,8 +26,15 @@ services:
     build:
       context: sgr-frontend
       dockerfile: Dockerfile
+    environment:
+      SGR_BACKEND_API: http://sgr-backend:8080
+#      TODO: separa in host e porta
     ports:
       - 3000:3000
+    volumes:
+      - ./sgr-frontend:/frontend-app
+    depends_on:
+      - sgr-backend
 
 volumes:
   sgr-data:

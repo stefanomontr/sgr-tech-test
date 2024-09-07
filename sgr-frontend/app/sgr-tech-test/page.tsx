@@ -1,15 +1,16 @@
 'use server';
-import Image from "next/image";
+import SgrEntity from "@/data/SgrEntity";
+import fetchFromBackendApi from "@/utils/fetch-utils";
 
-export default async function Home() {
-//     await fetch(process.env.SGR_BACKEND_API);
-  const backendApi = process.env.SGR_BACKEND_API;
+async function fetchSgrEntities() {
+  return fetchFromBackendApi(`/sgr/all`);
+}
 
-  return (
-    <div>
-        Hello hello
-        <br/>
-        {backendApi}
-    </div>
+export default async function SgrTechTest() {
+
+  const sgrEntities: SgrEntity[] = await fetchSgrEntities();
+
+  return sgrEntities.map(sgrEntity => 
+    <div key={sgrEntity.id}>{sgrEntity.id} : {sgrEntity.sgrString}</div>
   );
 }

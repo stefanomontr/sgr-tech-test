@@ -4,27 +4,32 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import sgr.compliance.sgr_backend.dtos.SgrDTO;
-import sgr.compliance.sgr_backend.mappers.SgrMapper;
-import sgr.compliance.sgr_backend.repositories.SgrRepository;
+import sgr.compliance.sgr_backend.services.ISgrService;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/srg")
+@RequestMapping("/sgr")
 @RequiredArgsConstructor
 public class SgrControllerImpl implements SgrController {
 
-    private final SgrRepository sgrRepository;
-    private final SgrMapper sgrMapper;
+    private final ISgrService sgrService;
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public SgrDTO getById(@PathVariable("id") Long id) {
-        return sgrMapper.toSgrDTO(sgrRepository.findById(id).orElse(null));
+    public SgrDTO findById(@PathVariable("id") Long id) {
+        return sgrService.findSgrEntityById(id);
+    }
+
+    @Override
+    public List<SgrDTO> findAllSgrEntities() {
+        return sgrService.findAllSgrEntities();
     }
 
     @PostMapping(value = "create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public SgrDTO createSgrEntity(@RequestBody SgrDTO sgrDTO) {
-        return sgrMapper.toSgrDTO(sgrRepository.save(sgrMapper.toSgrEntity(sgrDTO)));
+        return sgrService.createSgrEntity(sgrDTO);
     }
 
 }

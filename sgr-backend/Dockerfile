@@ -2,9 +2,8 @@ FROM mysql:9 AS builder
 
 ENV MYSQL_ROOT_PASSWORD=root
 ENV MYSQL_DATABASE=SGR_DATABASE
-
-ARG MYSQL_DB_HOST=localhost
-ENV SGR_MYSQL_DB_HOST=$MYSQL_DB_HOST
+# The test MySql DB is run on the same container, i.e. localhost
+ENV SGR_MYSQL_DB_HOST=localhost
 ARG SQL_SERVER_STARTUP_SCRIPT=start-test-sql-server.bash
 
 # manual openjdk17 installation copying from official image
@@ -15,7 +14,6 @@ ENV PATH=$OPENJDK_17_HOME/bin:$PATH
 
 # Copy backend app to be built
 WORKDIR /backend-app
-
 COPY . .
 COPY .mvn/ .mvn/
 
