@@ -7,7 +7,7 @@ import sgr.compliance.sgr_backend.dtos.SgrDTO;
 import java.util.List;
 
 @RequestMapping("/sgr")
-public interface SgrController {
+public interface ISgrController {
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     SgrDTO findById(@PathVariable("id") Long id);

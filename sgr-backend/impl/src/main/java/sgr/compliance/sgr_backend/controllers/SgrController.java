@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sgr")
 @RequiredArgsConstructor
-public class SgrControllerImpl implements SgrController {
+public class SgrController implements ISgrController {
 
     private final ISgrService sgrService;
 

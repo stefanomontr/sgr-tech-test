@@ -1,2 +1,4 @@
 .idea
+.run
 sgr-frontend-vite
+localhost-*.bash

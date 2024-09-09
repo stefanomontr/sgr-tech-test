@@ -18,6 +18,7 @@ public class SgrService implements ISgrService {
 
     @Override
     public SgrDTO findSgrEntityById(Long id) {
+        // TODO manage entity not found
         return sgrMapper.toSgrDTO(sgrRepository.findById(id).orElse(null));
     }
 
